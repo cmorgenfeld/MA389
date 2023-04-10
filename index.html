@@ -2,11 +2,33 @@
 <html>
 <head>
   <title>Ian Finch's Site</title>
+  <style>
+    html {
+      background-color: rgba(0,0,0,0.4);    
+    }
+    
+    .update-button {
+      background-color: rgba(0,0,0,0.2);
+      
+      transition: background-color 0.5s,
+        color 0.5s;
+    }
+    
+    .update-button:hover {
+      background-color: rgba(0,0,0,0.6);
+      color: white;
+    }
+    
+  </style>
 </head>
 <body>
 
   <h1>This is a Heading</h1>
   <p>This is a paragraph.</p>
+  
+  <button class="update-button">
+    Update Graph
+  </button>
 
 </body>
 </html> 
