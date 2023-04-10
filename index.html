@@ -1,50 +1,50 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Ian Finch's Site</title>
-  <style>
-    html {
-      background-color: rgba(0,0,0,0.4);    
-    }
+<html lang = 'en'>
+    <head>
+        <title>MA389 Project</title>
 
-    button {
-      background-color: rgba(0,0,0,0.2);
-      border-style: solid;
-      border-width: 1px;
-      border-color: black;
-      border-radius: 30px;
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-      padding-right: 10px;
-      padding-left: 10px;
-      padding-top: 5px;
-      padding-bottom: 5px;
+    </head>
 
-      cursor: pointer;
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.js" integrity="sha512-Cv3WnEz5uGwmTnA48999hgbYV1ImGjsDWyYQakowKw+skDXEYYSU+rlm9tTflyXc8DbbKamcLFF80Cf89f+vOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <h1>This is a Heading</h1>
+        <p>This is a paragraph.</p>
 
-      transition: background-color 0.5s,
-        color 0.5s;
-    }
+        <div class="plot-div">
+            <canvas id="plot">
 
-    button:hover {
-      background-color: rgba(0,0,0,0.6);
-      color: white;
-    }
+            </canvas>
+        </div>
 
-    .update-button {
-      font-family: Arial;
-      font-size: 20px;
-    }
-    
-  </style>
-</head>
-<body>
+        <script>
+            let myChart = document.getElementById('plot').getContext('2d');
 
-  <h1>This is a Heading</h1>
-  <p>This is a paragraph.</p>
-  
-  <button class="update-button">
-    Update Graph
-  </button>
+            let massPopChart = new Chart(myChart, {
+                type: 'bar',
+                data: {
+                    labels: ['Boston', 'Worcester', 'Springfield'],
+                    datasets: [{
+                        label: 'Population',
+                        data: [
+                            600000,
+                            180000,
+                            153000
+                        ]
+                    }]
+                },
+                options: {}
+            })
+        </script>
 
-</body>
+        <button class="update-button">
+            Update Graph
+        </button>
+    </body>
 </html> 
+
+    
