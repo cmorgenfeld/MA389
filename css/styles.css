@@ -1,5 +1,9 @@
 html {
-    background-color: rgba(0,0,0,0.4);    
+    /* background-color: rgba(0,0,0,0.4); */
+
+    /* background-color: #F2E3DB; */
+
+    background-color: #41644A; 
   }
 
 body {
@@ -19,6 +23,8 @@ button {
     padding-top: 5px;
     padding-bottom: 5px;
 
+    color: #F2E3DB;
+
     cursor: pointer;
 
     transition: background-color 0.5s,
@@ -36,9 +42,33 @@ button:hover {
 
 .plot-div {
     width: 900px;
-    height: 400px;
+    /* height: 500px; */
 
-    background-color: ghostwhite;
+    /* background-color: #41644A;  */
+    background-color: #F2E3DB;
 
     margin: auto; 
+
+    border-radius: 15px;
+}
+
+hr {
+    width: 500px;
+}
+
+.entry-block {
+    width: 450px;
+
+    border-radius: 15px;
+
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
+
+    /* background-color: #41644A;    */
+    background-color: #F2E3DB;
+    margin: auto;
+}
+
+.entry {
+    padding-bottom: 10px;
 }

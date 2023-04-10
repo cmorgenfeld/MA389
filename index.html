@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang = 'en'>
     <head>
+        <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>MA389 Project</title>
 
         <link rel="stylesheet" href="css/styles.css">
@@ -8,42 +11,191 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+
     </head>
 
     <body>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.js" integrity="sha512-Cv3WnEz5uGwmTnA48999hgbYV1ImGjsDWyYQakowKw+skDXEYYSU+rlm9tTflyXc8DbbKamcLFF80Cf89f+vOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <h1>This is a Heading</h1>
+        <h1>Prediction of Long-Distance Running Performance using Aerobic Training Indices</h1>
         <p>This is a paragraph.</p>
 
+        <hr>
+
+        <div class = "entry-block">
+            <div class="entry">
+                <label for="50m">Enter your 50m time (s):</label>
+                <input type="number" name="50m" id="50m" min="0">
+            </div>
+
+            <div class="entry">
+                <label for="100m">Enter your 100m time (s):</label>
+                <input type="number" name="100m" id="100m" min="0">
+            </div>
+
+            <div class="entry">
+                <label for="150m">Enter your 150m time (s):</label>
+                <input type="number" name="150m" id="150m" min="0">
+            </div>
+        </div>
+
+        <hr>
+        <div class = "entry-block">
+            <div class="entry">
+                <label for="weight">Enter your weight (kg):</label>
+                <input type="number" name="weight" id="weight" min="0">
+            </div>
+
+            <div class="entry">
+                <label for="sex">What is your sex?:</label>
+                <select name="sex" id="sex">
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+
+            <div class="entry">
+                <label for="testTime">Enter your 1.5 mile time (s):</label>
+                <input type="number" name="testTime" id="testTime" min="0">
+            </div>
+
+            <div class="entry">
+                <label for="HR">Enter your average test HR (bpm):</label>
+                <input type="number" name="HR" id="HR" min="0">
+            </div>
+        </div>
+        <hr>
+
         <div class="plot-div">
-            <canvas id="plot">
+            <canvas class="plot-canvas" id="plot">
 
             </canvas>
         </div>
 
-        <script>
-            let myChart = document.getElementById('plot').getContext('2d');
+        <button id="time" class="update-button">
+            Plot of Times
+        </button>
 
-            let massPopChart = new Chart(myChart, {
-                type: 'bar',
-                data: {
-                    labels: ['Boston', 'Worcester', 'Springfield'],
-                    datasets: [{
-                        label: 'Population',
-                        data: [
-                            600000,
-                            180000,
-                            153000
-                        ]
-                    }]
-                },
-                options: {}
-            })
-        </script>
+        <button id="speed" class="update-button">
+            Plot of Speeds
+        </button>
 
-        <button class="update-button">
+        <button id="update" class="update-button">
             Update Graph
         </button>
+
+        <script>
+            let timeItemData = [{
+                x: 50,
+                y: 5.48
+            }, {
+                x: 60,
+                y: 6.4
+            }, {
+                x: 100,
+                y: 10.07
+            }, {
+                x: 200,
+                y: 19.27
+            }, {
+                x: 400,
+                y: 43.27
+            }, {
+                x: 800,
+                y: 105.96
+            }, {
+                x: 1500,
+                y: 219.4
+            }, {
+                x: 3000,
+                y: 464.96
+            }, {
+                x: 5000,
+                y: 793.11
+            }, {
+                x: 10000,
+                y: 1614.1
+            }
+                ];
+
+            const timeData = {
+                datasets: [{
+                    label: 'Race Time Predictions',
+                    data: timeItemData,
+                    backgroundColor: '#E86A33',
+                    color: '#E86A33'
+                }]
+            };
+
+
+            const speedItemData = [{
+                x: 50,
+                y: 50/5.48
+            }, {
+                x: 60,
+                y: 60/6.4
+            }, {
+                x: 100,
+                y: 100/10.07
+            }, {
+                x: 200,
+                y: 200/19.27
+            }, {
+                x: 400,
+                y: 400/43.27
+            }, {
+                x: 800,
+                y: 800/105.96
+            }, {
+                x: 1500,
+                y: 1500/219.4
+            }, {
+                x: 3000,
+                y: 3000/464.96
+            }, {
+                x: 5000,
+                y: 5000/793.11
+            }, {
+                x: 10000,
+                y: 10000/1614.1
+            }
+                ];
+
+            const speedData = {
+                datasets: [{
+                    label: 'Race Time Predictions',
+                    data: speedItemData,
+                    backgroundColor: '#E86A33',
+                    color: '#E86A33'
+                }]
+            };
+
+            const config = {
+                type: 'scatter',
+                data: timeData
+            };
+
+            const chart = new Chart(
+                document.getElementById('plot'),
+                config
+            );
+            
+            const speed = document.getElementById("speed");
+            const time = document.getElementById("time");
+
+            speed.addEventListener('click', speedChart);
+            time.addEventListener('click', timeChart);
+
+            function speedChart() {
+                chart.data = speedData;
+                chart.update()
+            };
+
+            function timeChart() {
+                chart.data = timeData;
+                chart.update()
+            };
+
+        </script>
     </body>
 </html> 
 
