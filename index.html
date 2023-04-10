@@ -16,26 +16,26 @@
     </head>
 
     <body>
-        <h1><div class="title-div">Prediction of Long-Distance Running Performance using Aerobic Training Indices</div></h1>
+        <h1><span class="title-div">Prediction of Long-Distance Running Performance using Aerobic Training Indices</span></h1>
         
-        <p><div class="title-div">This tool will predict race times utliizing training indices.</div></p>
+        <p><span class="title-div">This tool will predict race times utliizing training indices.</span></p>
 
         <hr>
 
         <div class = "entry-block">
             <div class="entry">
                 <label for="50m">Enter your 50m time (s):</label>
-                <input type="number" name="50m" id="50m" min="0">
+                <input type="number" name="50m" id="50m" min="0" value="5.49">
             </div>
 
             <div class="entry">
                 <label for="100m">Enter your 100m time (s):</label>
-                <input type="number" name="100m" id="100m" min="0">
+                <input type="number" name="100m" id="100m" min="0" value="10.08">
             </div>
 
             <div class="entry">
                 <label for="150m">Enter your 150m time (s):</label>
-                <input type="number" name="150m" id="150m" min="0">
+                <input type="number" name="150m" id="150m" min="0" value="14.68">
             </div>
         </div>
 
@@ -43,7 +43,7 @@
         <div class = "entry-block">
             <div class="entry">
                 <label for="weight">Enter your weight (kg):</label>
-                <input type="number" name="weight" id="weight" min="0">
+                <input type="number" name="weight" id="weight" min="0" value="80">
             </div>
 
             <div class="entry">
@@ -55,15 +55,23 @@
             </div>
 
             <div class="entry">
-                <label for="testTime">Enter your 1.5 mile time (s):</label>
-                <input type="number" name="testTime" id="testTime" min="0">
+                <label for="testTime">Enter your 1.5 mile time (min):</label>
+                <input type="number" name="testTime" id="testTime" min="0" value="9">
             </div>
 
             <div class="entry">
                 <label for="HR">Enter your average test HR (bpm):</label>
-                <input type="number" name="HR" id="HR" min="0">
+                <input type="number" name="HR" id="HR" min="0" value="150">
             </div>
         </div>
+
+        <p><span class="title-div">Estimated VO2 Max: <span id="VO2">76</span></span></p>
+        <hr>
+
+        <button id="update" class="update-button">
+            Update Graph
+        </button>
+
         <hr>
 
         <div class="plot-div">
@@ -78,10 +86,6 @@
 
         <button id="speed" class="update-button">
             Plot of Speeds
-        </button>
-
-        <button id="update" class="update-button">
-            Update Graph
         </button>
 
         <script>
@@ -261,6 +265,7 @@
                 F = 150 / (tau * (time150 - tau));
 
                 VO2 = 100.16 + 7.3*sex - 0.164*weight - 1.273*testTime - 0.1563*HR;
+                document.getElementById('VO2').innerHTML = Math.round(VO2);
 
                 sigma = c_VO2 * (VO2 ** n_VO2);
                 E0 = c_E0 * (sigma ** n_E0);
@@ -279,6 +284,8 @@
 
                     times[i] = loopVar;
                     speeds[i] = distances[i] / times[i];
+
+                    console.log(times);
 
                     timeItemData.push({x: distances[i], y: times[i]});
                     speedItemData.push({x: distances[i], y: speeds[i]});
