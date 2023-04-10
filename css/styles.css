@@ -50,6 +50,10 @@ button:hover {
     margin: auto; 
 
     border-radius: 15px;
+
+    padding: 10px;
+
+    margin-bottom: 15px;
 }
 
 hr {
@@ -71,4 +75,14 @@ hr {
 
 .entry {
     padding-bottom: 10px;
+}
+
+.title-div {
+    background-color: #263A29;
+    color: #F2E3DB;
+
+    padding: 8px;
+    border-radius: 5px;
+
+    margin: auto;
 }

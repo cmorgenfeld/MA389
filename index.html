@@ -16,8 +16,9 @@
     </head>
 
     <body>
-        <h1>Prediction of Long-Distance Running Performance using Aerobic Training Indices</h1>
-        <p>This is a paragraph.</p>
+        <h1><div class="title-div">Prediction of Long-Distance Running Performance using Aerobic Training Indices</div></h1>
+        
+        <p><div class="title-div">This tool will predict race times utliizing training indices.</div></p>
 
         <hr>
 
@@ -84,7 +85,7 @@
         </button>
 
         <script>
-            let timeItemData = [{
+            var timeItemData = [{
                 x: 50,
                 y: 5.48
             }, {
@@ -117,7 +118,7 @@
             }
                 ];
 
-            const timeData = {
+            var timeData = {
                 datasets: [{
                     label: 'Race Time Predictions',
                     data: timeItemData,
@@ -127,7 +128,7 @@
             };
 
 
-            const speedItemData = [{
+            var speedItemData = [{
                 x: 50,
                 y: 50/5.48
             }, {
@@ -160,7 +161,7 @@
             }
                 ];
 
-            const speedData = {
+            var speedData = {
                 datasets: [{
                     label: 'Race Time Predictions',
                     data: speedItemData,
@@ -181,18 +182,116 @@
             
             const speed = document.getElementById("speed");
             const time = document.getElementById("time");
+            const update = document.getElementById("update");
+
+            var chart_type = "time";
+
+            // var time50 = document.getElementById("50m").value;
+            // var time100 = document.getElementById("100m").value;
+            // var time150 = document.getElementById("150m").value;
+
+            // var weight = document.getElementById("weight").value;
+            // var sex = document.getElementById("sex").value;
+            // var testTime = document.getElementById("testTime").value;
+            // var HR = document.getElementById("HR").value;
+
+            var time50;
+            var time100;
+            var time150;
+
+            var weight;
+            var sex;
+            var testTime;
+            var HR;
+
+            var tau;
+            var F;
+
+            var VO2;
+
+            var sigma;
+            var E0;
+
+            // Adjust to vary relationship between VO2 max and sigma
+            const c_VO2 = 0.5;
+            const n_VO2 = 1;
+
+            // Adjust to vary relationship between sigma and E0
+            const c_E0 = 6.5;
+            const n_E0 = 1;
+
+            const distances = [50, 60, 100, 200, 400, 800, 1500, 3000, 5000, 10000];
+
+            var times = [5.48, 6.4, 10.07, 19.27, 43.27, 105.96, 219.4, 464.96, 793.11, 1614.1];
+            
+            var speeds = [50/5.48, 60/6.4, 100/10.07, 200/19.27, 400/43.27, 800/105.96, 1500/219.4, 3000/464.96, 5000/793.11, 10000/1614.1];
 
             speed.addEventListener('click', speedChart);
             time.addEventListener('click', timeChart);
+            update.addEventListener('click', updateChart);
 
             function speedChart() {
-                chart.data = speedData;
+                chart_type = 'speed';
+                chart.data.datasets[0].data = speedItemData;
                 chart.update()
             };
 
             function timeChart() {
-                chart.data = timeData;
+                chart_type = 'time';
+                chart.data.datasets[0].data = timeItemData;
                 chart.update()
+            };
+
+            var loopVar;
+
+            function updateChart() {
+                // Update all the inputs
+                time50 = document.getElementById("50m").value;
+                time100 = document.getElementById("100m").value;
+                time150 = document.getElementById("150m").value;
+
+                weight = document.getElementById("weight").value;
+                sex = document.getElementById("sex").value;
+                testTime = document.getElementById("testTime").value;
+                HR = document.getElementById("HR").value;
+
+                // Calculate max force and resistance constant using sprint times
+                // (Just simple calculation by hand)
+                tau = (2*time50 - time100);
+                F = 150 / (tau * (time150 - tau));
+
+                VO2 = 100.16 + 7.3*sex - 0.164*weight - 1.273*testTime - 0.1563*HR;
+
+                sigma = c_VO2 * (VO2 ** n_VO2);
+                E0 = c_E0 * (sigma ** n_E0);
+
+                console.log(tau, F, VO2, sigma, E0);
+
+                timeItemData = [];
+                speedItemData = [];
+
+                
+
+                for (let i = 0; i < distances.length; i++) {
+                    loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
+                    loopVar = (loopVar ** 0.5) - E0;
+                    loopVar = loopVar / (2*sigma);
+
+                    times[i] = loopVar;
+                    speeds[i] = distances[i] / times[i];
+
+                    timeItemData.push({x: distances[i], y: times[i]});
+                    speedItemData.push({x: distances[i], y: speeds[i]});
+                }
+
+                if (chart_type == "time") {
+                    chart.data.datasets[0].data = timeItemData;
+                } else {
+                    chart.data.datasets[0].data = speedItemData;
+                }
+
+                chart.update();
+                
             };
 
         </script>
