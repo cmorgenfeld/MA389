@@ -80,7 +80,7 @@
             </canvas>
         </div>
 
-        <button id="time" class="update-button">
+        <button id="time" class="update-button" margin-right="100px">
             Plot of Times
         </button>
 
@@ -124,10 +124,12 @@
 
             var timeData = {
                 datasets: [{
-                    label: 'Race Time Predictions',
+                    label: 'Average Race Time Predictions by Race Distance',
                     data: timeItemData,
                     backgroundColor: '#E86A33',
-                    color: '#E86A33'
+                    // color: '#263A29',
+                    borderColor: '#263A29',
+                    borderWidth: 2
                 }]
             };
 
@@ -167,16 +169,45 @@
 
             var speedData = {
                 datasets: [{
-                    label: 'Race Time Predictions',
+                    // label: 'Race Time Predictions',
                     data: speedItemData,
                     backgroundColor: '#E86A33',
-                    color: '#E86A33'
+                    color: '#E86A33',
+                    bordercolor: '#263A29'
                 }]
             };
 
             const config = {
                 type: 'scatter',
-                data: timeData
+                data: timeData,
+                options: {
+                    plugins: {
+                        title: {
+                            display: false,
+                            text: 'Speed/Time Predictions',
+                            position: 'top  '
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Predicted Time (sec)'
+                            }
+                        }],
+
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Race Distance (m)'
+                            }
+                        }]
+                    }
+                }
             };
 
             const chart = new Chart(
@@ -237,12 +268,18 @@
             function speedChart() {
                 chart_type = 'speed';
                 chart.data.datasets[0].data = speedItemData;
+                chart.data.datasets[0].label = 'Average Race Speed Predictions by Race Distance';
+
+                chart.options.scales.yAxes[0].scaleLabel.labelString = "Average Speed (m/s)";
                 chart.update()
             };
 
             function timeChart() {
                 chart_type = 'time';
                 chart.data.datasets[0].data = timeItemData;
+                chart.data.datasets[0].label = 'Average Race Time Predictions by Race Distance';
+
+                chart.options.scales.yAxes[0].scaleLabel.labelString = "Predicted Time (sec)";
                 chart.update()
             };
 

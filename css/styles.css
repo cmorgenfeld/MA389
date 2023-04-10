@@ -38,10 +38,12 @@ button:hover {
 
 .update-button {
     font-size: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .plot-div {
-    width: 900px;
+    width: 70%;
     /* height: 500px; */
 
     /* background-color: #41644A;  */
