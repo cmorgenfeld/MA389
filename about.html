@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+    <head>
+        <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>MA389 Project</title>
+
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+
+    </head>
+
+    <body>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.html">Performance Calculator</a>
+            <a href="about.html">About</a>
+            <a href="presentation-materials.html">Presentation Materials</a>
+            </div>
+
+        <h1><span class="title-div">Prediction of Long-Distance Running Performance using Aerobic Training Indices</span></h1>
+        
+        <p><span class="title-div">About the project.</span></p>
+
+        <span class="title-div nav-icon" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+
+        <hr>
+
+        <p><span class="title-div">The course.</span></p>
+        
+        <p><div class="text-block">
+            MA389 is a course intended for individually supervised research and study, in order to 
+            familiarize cadets with techniques used in advanced scientific study. The primary purpose is 
+            to prepare students for independent research in mathematics with the essential skills required. 
+            With the approval of the Head of the Department, the cadet chooses a research project of interest
+            and is supervised by a faculty member conducting the research.
+        </div></p>
+
+        <hr>
+
+        <p><span class="title-div">Modelling approaches.</span></p>
+        
+        <p><div class="text-block">
+            Statistical models draw conclusions from real-world data. Researchers exploring a question may design 
+            an experiment or utilize existing sources to collect their data. They can then use a wide array statistical
+            methods to evaluate the data and arrive at a solution. Statistical models gain credibility from their
+            direct link to real-world data, although the model's descriptive ability is limited by the quality of 
+            the data or study.
+        </div></p>
+
+        <p><div class="text-block">
+            Mechanistic models ground potential solutions in the ``mechanics'' of real-world phenomenon. Mathematicians 
+            may look to biology, engineering, physics, or other fields to understand the processes and laws governing 
+            certain processes. While a statistical approach may struggle to provide data providing both internal and 
+            external validity to a model, a mechanistic approach instead works to determine the solve a general form of 
+            the problem before adjusting the values of constants to match real-world occurrences. The resulting model is 
+            more flexible and generalizable than a statistical model, although it may sacrifice complexity for mathematical elegance.
+        </div></p>
+
+        <p><div class="text-block">
+            While both modelling approaches suffer from unique challenges, a combination of the techniques can yield 
+            powerful and insightful results. A mechanistic approach lends to a model both a firm grounding in the 
+            laws that govern reality, as well as ``future proofing'' the work by maintaining a generalizability 
+            untethered to imperfect data. A statistical approach allows for an informed estimates of constants 
+            and links past measurements to future predictions.
+        </div></p>
+
+        <hr>
+
+        <p><span class="title-div">Why running?</span></p>
+        
+        <p><div class="text-block">
+            Long distance running is a popular sport, as evidenced by a huge number of participants in marathons worldwide (50,000 in 
+            the NYC marathon alone). And while there exists accurate predictors of aerobic performance, these are physiological factors
+            like VO2 max and lactate threshold. These factors require expensive, time consuming, difficult tests to accurately estimate. 
+            Training indices, on the other hand, are already tracked by nearly all runners. These include distance, time, pace, and heart rate.
+            Building a mathematical model to predict long distance race performance using training indices, rather than physiological factors,
+            will improve amateur runners' ability to set informed performance goals.  
+        </div></p>
+
+        <p><div class="text-block">
+            In short, there exists a lack of predictive tools grounded in mechanistic math modelling for the amateur runner.
+        </div></p>
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+        
+        
+    </body>
+</html> 
+
+    

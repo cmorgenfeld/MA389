@@ -16,9 +16,20 @@
     </head>
 
     <body>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.html">Performance Calculator</a>
+            <a href="about.html">About</a>
+            <a href="presentation-materials.html">Presentation Materials</a>
+          </div>
+
         <h1><span class="title-div">Prediction of Long-Distance Running Performance using Aerobic Training Indices</span></h1>
         
         <p><span class="title-div">This tool will predict race times utliizing training indices.</span></p>
+
+        <span class="title-div nav-icon" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
 
         <hr>
 
@@ -221,15 +232,6 @@
 
             var chart_type = "time";
 
-            // var time50 = document.getElementById("50m").value;
-            // var time100 = document.getElementById("100m").value;
-            // var time150 = document.getElementById("150m").value;
-
-            // var weight = document.getElementById("weight").value;
-            // var sex = document.getElementById("sex").value;
-            // var testTime = document.getElementById("testTime").value;
-            // var HR = document.getElementById("HR").value;
-
             var time50;
             var time100;
             var time150;
@@ -252,7 +254,7 @@
             const n_VO2 = 1;
 
             // Adjust to vary relationship between sigma and E0
-            const c_E0 = 6.5;
+            const c_E0 = 60;
             const n_E0 = 1;
 
             const distances = [50, 60, 100, 200, 400, 800, 1500, 3000, 5000, 10000];
@@ -287,9 +289,23 @@
 
             function updateChart() {
                 // Update all the inputs
-                time50 = document.getElementById("50m").value;
-                time100 = document.getElementById("100m").value;
-                time150 = document.getElementById("150m").value;
+                time50 = parseFloat(document.getElementById("50m").value);
+                time100 = parseFloat(document.getElementById("100m").value);
+                time150 = parseFloat(document.getElementById("150m").value);
+
+
+                // console.log(typeof time100);
+
+
+                if(time100 == 2*time50 || time100 < time50) {
+                    time100 = 2*time50 - 0.01;
+                    document.getElementById('100m').value = time100;
+                } 
+
+                if(time150 < time100) {
+                    time150 = 1.5 * time100 - 0.01; 
+                    document.getElementById('150m').value = time150;
+                }
 
                 weight = document.getElementById("weight").value;
                 sex = document.getElementById("sex").value;
@@ -307,7 +323,7 @@
                 sigma = c_VO2 * (VO2 ** n_VO2);
                 E0 = c_E0 * (sigma ** n_E0);
 
-                console.log(tau, F, VO2, sigma, E0);
+                console.log("Tau:", tau, "F:", F, "VO2:", VO2, "Sigma:", sigma, "E0:", E0);
 
                 timeItemData = [];
                 speedItemData = [];
@@ -315,14 +331,18 @@
                 
 
                 for (let i = 0; i < distances.length; i++) {
-                    loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
-                    loopVar = (loopVar ** 0.5) - E0;
-                    loopVar = loopVar / (2*sigma);
+                    if(i > 2) {
+                        loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
+                        loopVar = (loopVar ** 0.5) - E0;
+                        loopVar = loopVar / (2*sigma);
+                    } else {
+                        loopVar = distances[i] / (F * tau) + tau;
+                    }
 
                     times[i] = loopVar;
                     speeds[i] = distances[i] / times[i];
 
-                    console.log(times);
+                    // console.log(times);
 
                     timeItemData.push({x: distances[i], y: times[i]});
                     speedItemData.push({x: distances[i], y: speeds[i]});
@@ -337,6 +357,14 @@
                 chart.update();
                 
             };
+
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
 
         </script>
     </body>
