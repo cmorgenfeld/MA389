@@ -297,13 +297,13 @@
                 // console.log(typeof time100);
 
 
-                if(time100 == 2*time50 || time100 < time50) {
-                    time100 = 2*time50 - 0.01;
+                if(time100 >= 2*time50 || time100 < time50) {
+                    time100 = 2*time50 - 0.1;
                     document.getElementById('100m').value = time100;
                 } 
 
-                if(time150 < time100) {
-                    time150 = 1.5 * time100 - 0.01; 
+                if(time150 < time100 || time150 >= 3/2 * time100) {
+                    time150 = 1.5 * time100 - 0.1; 
                     document.getElementById('150m').value = time150;
                 }
 
@@ -321,7 +321,8 @@
                 document.getElementById('VO2').innerHTML = Math.round(VO2);
 
                 sigma = c_VO2 * (VO2 ** n_VO2);
-                E0 = c_E0 * (sigma ** n_E0);
+
+                E0 = (5827483.25) / (testTime * 60 * tau) - testTime * 60 * sigma;
 
                 console.log("Tau:", tau, "F:", F, "VO2:", VO2, "Sigma:", sigma, "E0:", E0);
 
