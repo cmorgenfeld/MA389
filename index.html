@@ -250,7 +250,7 @@
             var E0;
 
             // Adjust to vary relationship between VO2 max and sigma
-            const c_VO2 = 0.5;
+            const c_VO2 = 0.0441;
             const n_VO2 = 1;
 
             // Adjust to vary relationship between sigma and E0
@@ -320,7 +320,7 @@
                 VO2 = 100.16 + 7.3*sex - 0.164*weight - 1.273*testTime - 0.1563*HR;
                 document.getElementById('VO2').innerHTML = Math.round(VO2);
 
-                sigma = c_VO2 * (VO2 ** n_VO2);
+                sigma = (c_VO2 * (VO2 ** n_VO2) + 31.888) / tau;
 
                 E0 = (5827483.25) / (testTime * 60 * tau) - testTime * 60 * sigma;
 
@@ -332,12 +332,33 @@
                 
 
                 for (let i = 0; i < distances.length; i++) {
-                    if(i > 3) {
+                    if(i > 6) {
                         loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
                         loopVar = (loopVar ** 0.5) - E0;
                         loopVar = loopVar / (2*sigma);
-                    } else {
+                    } else if (i < 4){
+                        // console.log(distances[i]);
                         loopVar = distances[i] / (F * tau) + tau;
+                    } else if (i == 4) {
+                        loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
+                        loopVar = (loopVar ** 0.5) - E0;
+                        loopVar = loopVar / (2*sigma);
+                        loopVar += 2 * (distances[i] / (F * tau) + tau);
+                        loopVar /= 3;
+                    } else if (i == 5) {
+                        loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
+                        loopVar = (loopVar ** 0.5) - E0;
+                        loopVar = loopVar / (2*sigma);
+                        loopVar *= 2;
+                        loopVar +=  (distances[i] / (F * tau) + tau);
+                        loopVar /= 3;
+                    } else {
+                        loopVar = E0 ** 2 + (4 * sigma * (distances[i]**2))/tau;
+                        loopVar = (loopVar ** 0.5) - E0;
+                        loopVar = loopVar / (2*sigma);
+                        loopVar *= 6;
+                        loopVar +=  (distances[i] / (F * tau) + tau);
+                        loopVar /= 7;
                     }
 
                     times[i] = loopVar;
